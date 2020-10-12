@@ -1,16 +1,10 @@
 # Legacy POC - Lúpulo
+#### Desafio individual - Gabriel Freguglia
 
-## Para subir o banco de dados:
-Abra um terminal em **src/main/resources/sql**
 
-`docker-compose up`
+O sistema está configurado para subir via docker-compose
+Para efetuar testes, comente o serviço 'poc-mq' antes de subir, e execute através da task 'bootRun'
 
-Em um novo terminal: 
-
-`docker exec -it sql_db_1 bash`
-
-`mysql -uroot -proot`
-
-`use lupulo_db;`
-
-Copie e cole o conteúdo de **src/main/resources/sql/create-tables.sql**  
+Dados de conexão do banco de dados: 
+Usuário / Senha do MySQL: poc/poc
+Database: lupulo_db
