@@ -6,7 +6,6 @@ import org.hibernate.annotations.Type;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
@@ -25,14 +24,9 @@ public class ContaCorrente {
     @JsonIgnore
     private UUID hashid;
 
-    @Column(precision = 15, scale = 2, nullable = false)
-    @JsonIgnore
-    private BigDecimal saldo;
-
     @PrePersist
     public void autofill(){
         this.setHashid(UUID.randomUUID());
-        this.setSaldo(BigDecimal.ZERO);
     }
 
 }
