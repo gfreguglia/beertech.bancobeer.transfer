@@ -4,21 +4,16 @@ import br.com.beertechtalents.lupulo.pocmq.model.TipoTransacao;
 import br.com.beertechtalents.lupulo.pocmq.model.Transacao;
 import br.com.beertechtalents.lupulo.pocmq.repository.TransacaoRepository;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Bean;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.UUID;
 
 @ExtendWith(MockitoExtension.class)
 public class TransacaoServiceTest {
@@ -38,8 +33,9 @@ public class TransacaoServiceTest {
 
         Mockito.when(transacaoRepository.save(Mockito.any(Transacao.class))).then(i -> {
             Transacao t = (Transacao) i.getArguments()[0];
-            t.setId(1l);
-            t.setDatahora(new Timestamp(10000l));
+            t.setId(1L);
+            t.setDatahora(new Timestamp(10000L));
+            t.setHashconta(UUID.randomUUID().toString());
             return t;
         });
 
@@ -49,10 +45,11 @@ public class TransacaoServiceTest {
 
     @Test
     public void buscarSaldoTest() {
+        String hashconta = UUID.randomUUID().toString();
 
-        Mockito.when(transacaoRepository.somaSaldo()).then(i -> BigDecimal.TEN);
+        Mockito.when(transacaoRepository.somaSaldo(hashconta)).then(i -> BigDecimal.TEN);
 
-        BigDecimal saldo = transacaoService.buscarSaldo();
+        BigDecimal saldo = transacaoService.buscarSaldo(hashconta);
 
         Assertions.assertEquals(BigDecimal.TEN, saldo);
     }
