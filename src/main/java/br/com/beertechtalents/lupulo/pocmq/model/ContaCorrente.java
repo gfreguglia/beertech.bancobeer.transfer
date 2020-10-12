@@ -2,37 +2,37 @@ package br.com.beertechtalents.lupulo.pocmq.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import org.springframework.data.annotation.CreatedDate;
+import org.hibernate.annotations.Type;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.util.UUID;
 
 @Entity
 @Data
 @EntityListeners(AuditingEntityListener.class)
-public class Transacao {
+public class ContaCorrente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonIgnore
     private Long id;
 
-
-    @Column(nullable = false)
-    private String hashconta;
-
-    @Column(length = 10, nullable = false)
-    @Enumerated(EnumType.STRING)
-    private TipoTransacao tipo;
+    @Column(updatable = false, unique = true, nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Type(type="uuid-char")
+    @JsonIgnore
+    private UUID hashid;
 
     @Column(precision = 15, scale = 2, nullable = false)
-    private BigDecimal valor;
-
-    @CreatedDate
     @JsonIgnore
-    private Timestamp datahora;
+    private BigDecimal saldo;
+
+    @PrePersist
+    public void autofill(){
+        this.setHashid(UUID.randomUUID());
+        this.setSaldo(BigDecimal.ZERO);
+    }
 
 }
-

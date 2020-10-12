@@ -3,11 +3,9 @@ package br.com.beertechtalents.lupulo.pocmq.rest;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-@Component
-public class TransacaoAdapter {
+public class ContaCorrenteAdapter {
 
     final RestTemplate restTemplate = new RestTemplate();
 
@@ -18,7 +16,6 @@ public class TransacaoAdapter {
         header.add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
         HttpEntity<String> resquestBody = new HttpEntity(body, header);
 
-        restTemplate.postForObject("http://localhost:8080/transacao", resquestBody, String.class);
-
+        restTemplate.postForObject("http://localhost:8080/contacorrente", resquestBody, String.class);
     }
 }
