@@ -5,6 +5,8 @@
 
 O sistema está configurado para subir via docker-compose
 
+Para executar o sistema, abra um cmd/terminal na pasta local e rode `docker-compose up` 
+
 Para efetuar testes, comente o serviço 'poc-mq' antes de subir, e execute através da task 'bootRun'
 
 `-------------------------------`
